@@ -31,14 +31,7 @@ const config = (() => {
     process.exit(1);
   }
 
-  const prefix = process.env.BOT_PREFIX;
 
-  if (!prefix) {
-    console.error("Missing BOT_PREFIX environment variable");
-    process.exit(1);
-  }
-
-  return { token, prefix };
 })();
 
 
