@@ -75,7 +75,7 @@ bot.on("messageReactionAdd", async (reaction, user) => {
   var id = reaction.message.id;
 
   if (reactedMessage.webhookID) {
-    if (reaction.emoji == "📝" || "✏️") {
+    if (reaction.emoji.name === "📝" | "✏️") {
       if (user.bot) return;
       
       var users = await reaction.users.fetch();
