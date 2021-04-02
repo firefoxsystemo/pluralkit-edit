@@ -6,7 +6,7 @@ const path = require("path");
 const fs = require("fs");
 const util = require("util");
 // Only import the Client class from Discord.js
-const { Client, Intents, MessageCollector, APIMessage } = require("discord.js");
+const { Client, Intents, MessageCollector, APIMessage, MessageEmbed } = require("discord.js");
 
 
 
@@ -15,9 +15,7 @@ const fetch = require("node-fetch");
 
 require("dotenv").config();
 
-// Super fancy config loader/validator
-const config = (() => {
-  const token = process.env.BOT_TOKEN;
+const token = process.env.BOT_TOKEN;
 
   // If there isn't a token, the bot won't start, but if there is then
   // we want to make sure it's a valid bot token
@@ -30,9 +28,6 @@ const config = (() => {
     console.error("Invalid bot token!");
     process.exit(1);
   }
-
-
-})();
 
 
 // Define gateway intents
@@ -48,11 +43,11 @@ const bot = new Client({
   disableEveryone: true,
 });
 
-// Store the config
-bot.config = config;
 
 bot.on("ready", () => {
   console.log(`Logged in as ${bot.user.tag} (ID: ${bot.user.id})`);
+  bot.user.setStatus('online')
+  bot.user.setPresence({ activity: { name: 'pke!help' }, status: 'online' })
 });
 
 bot.on("message", (message) => {
@@ -63,6 +58,17 @@ bot.on("message", (message) => {
 
   // Just a shorthand variable
   let { content } = message;
+  if (content === 'pke!help') {
+      if (!message.guild.member('466378653216014359')) {
+          const embedContent = `This is a bot to edit PluralKit messages. You don't currently have the PluralKit bot in this server, so this bot is obsolete. There are no other commands.`
+          const helpEmbed = new MessageEmbed().setTitle(embedContent);
+          message.channel.send(helpEmbed)
+      } else {
+          const embedContent = `This is a bot to edit PluralKit messages. Simple react with :pencil: or :pencil2: to a proxied PluralKit message that you'd like to edit, and I'll DM you for the new message content. There are no other commands. If you'd like to invite this bot, [click here!](https://discord.com/api/oauth2/authorize?client_id=815113578381443103&permissions=536882176&scope=bot) There are no other commands.`
+          const helpEmbed = new MessageEmbed().setDescription(embedContent);
+          message.channel.send(helpEmbed)
+      }
+  }
   
 });
 
@@ -80,7 +86,6 @@ bot.on("messageReactionAdd", async (reaction, user) => {
       
       var users = await reaction.users.fetch();
       var userID = users.keys().next().value;
-      // bad code but i worked on this for hours so idgaf
       var userReacted = bot.users.cache.get(userID);
       // fetches the info from pk api
 
@@ -149,5 +154,4 @@ bot.on("messageReactionAdd", async (reaction, user) => {
   }
 });
 
-// Only run the bot if the token was provided
-config.token && bot.login(config.token);
+bot.login(token);
