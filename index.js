@@ -15,9 +15,7 @@ const fetch = require("node-fetch");
 
 require("dotenv").config();
 
-// Super fancy config loader/validator
-const config = (() => {
-  const token = process.env.BOT_TOKEN;
+const token = process.env.BOT_TOKEN;
 
   // If there isn't a token, the bot won't start, but if there is then
   // we want to make sure it's a valid bot token
@@ -30,9 +28,6 @@ const config = (() => {
     console.error("Invalid bot token!");
     process.exit(1);
   }
-
-
-})();
 
 
 // Define gateway intents
@@ -48,8 +43,6 @@ const bot = new Client({
   disableEveryone: true,
 });
 
-// Store the config
-bot.config = config;
 
 bot.on("ready", () => {
   console.log(`Logged in as ${bot.user.tag} (ID: ${bot.user.id})`);
@@ -155,5 +148,4 @@ bot.on("messageReactionAdd", async (reaction, user) => {
   }
 });
 
-// Only run the bot if the token was provided
-config.token && bot.login(config.token);
+bot.login(token);
