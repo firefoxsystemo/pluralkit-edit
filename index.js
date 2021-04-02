@@ -63,6 +63,13 @@ bot.on("message", (message) => {
 
   // Just a shorthand variable
   let { content } = message;
+  if (content === 'pke!help') {
+      if (!message.guild.member('466378653216014359')) {
+          message.channel.send(`This is a bot to edit PluralKit messages. You don't currently have the PluralKit bot in this server, so this bot is obsolete. There are no other commands.`)
+      } else {
+          message.channel.send(`This is a bot to edit PluralKit messages. Simple react with :pencil: or :pencil2: to a proxied PluralKit message that you'd like to edit, and I'll DM you for the new message content. There are no other commands. If you'd like to invite this bot, [click here!](https://discord.com/api/oauth2/authorize?client_id=815113578381443103&permissions=536882176&scope=bot) There are no other commands.`)
+      }
+  }
   
 });
 
@@ -80,7 +87,6 @@ bot.on("messageReactionAdd", async (reaction, user) => {
       
       var users = await reaction.users.fetch();
       var userID = users.keys().next().value;
-      // bad code but i worked on this for hours so idgaf
       var userReacted = bot.users.cache.get(userID);
       // fetches the info from pk api
 
