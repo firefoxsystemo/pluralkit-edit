@@ -6,7 +6,7 @@ const path = require("path");
 const fs = require("fs");
 const util = require("util");
 // Only import the Client class from Discord.js
-const { Client, Intents, MessageCollector, APIMessage } = require("discord.js");
+const { Client, Intents, MessageCollector, APIMessage, MessageEmbed } = require("discord.js");
 
 
 
@@ -46,6 +46,8 @@ const bot = new Client({
 
 bot.on("ready", () => {
   console.log(`Logged in as ${bot.user.tag} (ID: ${bot.user.id})`);
+  bot.user.setStatus('online')
+  bot.user.setPresence({ activity: { name: 'pke!help' }, status: 'online' })
 });
 
 bot.on("message", (message) => {
@@ -58,9 +60,13 @@ bot.on("message", (message) => {
   let { content } = message;
   if (content === 'pke!help') {
       if (!message.guild.member('466378653216014359')) {
-          message.channel.send(`This is a bot to edit PluralKit messages. You don't currently have the PluralKit bot in this server, so this bot is obsolete. There are no other commands.`)
+          const embedContent = `This is a bot to edit PluralKit messages. You don't currently have the PluralKit bot in this server, so this bot is obsolete. There are no other commands.`
+          const helpEmbed = new MessageEmbed().setTitle(embedContent);
+          message.channel.send(helpEmbed)
       } else {
-          message.channel.send(`This is a bot to edit PluralKit messages. Simple react with :pencil: or :pencil2: to a proxied PluralKit message that you'd like to edit, and I'll DM you for the new message content. There are no other commands. If you'd like to invite this bot, [click here!](https://discord.com/api/oauth2/authorize?client_id=815113578381443103&permissions=536882176&scope=bot) There are no other commands.`)
+          const embedContent = `This is a bot to edit PluralKit messages. Simple react with :pencil: or :pencil2: to a proxied PluralKit message that you'd like to edit, and I'll DM you for the new message content. There are no other commands. If you'd like to invite this bot, [click here!](https://discord.com/api/oauth2/authorize?client_id=815113578381443103&permissions=536882176&scope=bot) There are no other commands.`
+          const helpEmbed = new MessageEmbed().setDescription(embedContent);
+          message.channel.send(helpEmbed)
       }
   }
   
