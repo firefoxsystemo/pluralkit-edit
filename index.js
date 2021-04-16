@@ -20,11 +20,11 @@ bot.on("message", async (message) => {
         // This will be added again when bot is verified, but for now, it messes things up.
         // if (!message.guild.member('466378653216014359')) {
         // const embedContent = `This is a bot to edit PluralKit messages. You don't currently have the PluralKit bot in this server, so this bot is obsolete. There are no other commands.`
-        // const helpEmbed = new Discord.MessageEmbed().setTitle(embedContent);
+        // const helpEmbed = new Discord.MessageEmbed().setDescription(embedContent);
         // message.channel.send(helpEmbed)
         // } else {
         const embedContent = `This is a bot to edit PluralKit messages. Simply react with :pencil: or :pencil2: to a proxied PluralKit message that you'd like to edit, and I'll DM you for the new message content. You can also edit messages using the command \`pke!edit <message ID or link> <new content>\`. If you'd like to invite this bot, [click here!](https://discord.com/api/oauth2/authorize?client_id=815113578381443103&permissions=536882176&scope=bot) The PluralKit bot itself can be invited with [this link.](https://discord.com/oauth2/authorize?client_id=466378653216014359&scope=bot%20applications.commands&permissions=536995904)`
-        const helpEmbed = new Discord.MessageEmbed().setTitle(embedContent);
+        const helpEmbed = new Discord.MessageEmbed().setDescription(embedContent);
         message.channel.send(helpEmbed)
         // }
     } else if (message.content.startsWith('pke!edit')) {
